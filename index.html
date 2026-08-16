@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>什麼是知識庫 · 第一場線上讀書會</title>
+<style>
+  :root {
+    --bg-1: #D7CCC8;
+    --bg-2: #EFEBE9;
+    --bg-3: #E8DED9;
+    --bg-4: #DDD0C9;
+    --bg-5: #C9BAB1;
+    --bg-dark: #4E342E;
+
+    --text:        #4E342E;
+    --text-strong: #3E2723;
+    --text-soft:   #5D4037;
+    --text-on-dark:#F5EDE0;
+
+    --accent:      #D88C3A;
+    --accent-light:#D4A574;
+    --subtle:      #BCAAA4;
+
+    --font-display: "PingFang TC","Noto Sans TC","Inter","Helvetica Neue",system-ui,sans-serif;
+    --font-body:    "PingFang TC","Noto Sans TC","Inter",system-ui,sans-serif;
+    --font-mono:    "JetBrains Mono","SF Mono",ui-monospace,monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg-1);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  section {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 96px 56px;
+    position: relative;
+  }
+  section[data-bg="1"] { background: var(--bg-1); }
+  section[data-bg="2"] { background: var(--bg-2); }
+  section[data-bg="3"] { background: var(--bg-3); }
+  section[data-bg="4"] { background: var(--bg-4); }
+  section[data-bg="5"] { background: var(--bg-5); }
+  section[data-bg="dark"] {
+    background: var(--bg-dark);
+    color: var(--text-on-dark);
+  }
+
+  .act-cap {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 28px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .act-cap::before {
+    content: "";
+    width: 28px; height: 1px;
+    background: var(--accent);
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6.4vw, 92px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--text-strong);
+    margin: 0 0 24px;
+  }
+  section[data-bg="dark"] .display { color: var(--text-on-dark); }
+
+  .h1 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.4vw, 40px);
+    line-height: 1.25;
+    font-weight: 700;
+    color: var(--text-strong);
+    margin: 0 0 20px;
+  }
+  section[data-bg="dark"] .h1 { color: var(--text-on-dark); }
+
+  .h2 {
+    font-size: 20px;
+    line-height: 1.3;
+    font-weight: 600;
+    color: var(--text-strong);
+    margin: 0 0 8px;
+  }
+  section[data-bg="dark"] .h2 { color: var(--text-on-dark); }
+
+  .lead {
+    font-size: clamp(18px, 1.7vw, 23px);
+    line-height: 1.75;
+    color: var(--text-soft);
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  section[data-bg="dark"] .lead { color: rgba(245,237,224,0.82); }
+
+  .body {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--text-soft);
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 1080px;
+    text-align: center;
+  }
+  .wrap.left { text-align: left; }
+
+  /* 規矩列表 */
+  .rules {
+    list-style: none;
+    padding: 0;
+    margin: 44px auto 0;
+    max-width: 760px;
+    text-align: left;
+    display: grid;
+    gap: 18px;
+  }
+  .rules li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 18px;
+    align-items: start;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.65;
+    color: var(--text-soft);
+  }
+  .rules .n {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    width: 32px; height: 32px;
+    display: grid;
+    place-items: center;
+    margin-top: 2px;
+  }
+  .rules strong { color: var(--text-strong); font-weight: 700; }
+
+  /* 大提問框 */
+  .askbox {
+    margin: 40px auto 0;
+    max-width: 860px;
+    background: rgba(255, 248, 240, 0.6);
+    border: 1px solid var(--subtle);
+    border-left: 4px solid var(--accent);
+    border-radius: 14px;
+    padding: 34px 38px;
+    text-align: left;
+  }
+  .askbox p {
+    margin: 0 0 14px;
+    font-size: clamp(19px, 1.8vw, 25px);
+    line-height: 1.65;
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+  .askbox p:last-child { margin-bottom: 0; }
+  .askbox .sub {
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+
+  /* 可複製的提示詞區 */
+  .prompt {
+    margin: 36px auto 0;
+    max-width: 820px;
+    background: #FFF8F0;
+    border: 1px solid var(--subtle);
+    border-radius: 14px;
+    padding: 30px 34px;
+    text-align: left;
+    font-size: clamp(17px, 1.6vw, 21px);
+    line-height: 2.1;
+    color: var(--text-strong);
+  }
+  .prompt .blank {
+    display: inline-block;
+    min-width: 150px;
+    border-bottom: 2px solid var(--accent);
+    margin: 0 6px;
+  }
+  .prompt .ask {
+    display: block;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px dashed var(--subtle);
+    line-height: 1.7;
+  }
+  .note {
+    margin-top: 26px;
+    font-size: 15px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+
+  .grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    margin-top: 44px;
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 40px;
+  }
+  .card {
+    background: rgba(255, 248, 240, 0.55);
+    border: 1px solid var(--subtle);
+    border-radius: 16px;
+    padding: 30px 28px;
+    text-align: left;
+  }
+  .card .num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  section[data-bg="dark"] .card {
+    background: rgba(255,248,240,0.06);
+    border-color: rgba(245,237,224,0.18);
+  }
+
+  .quote {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3.2vw, 42px);
+    line-height: 1.55;
+    font-weight: 600;
+    color: var(--text-strong);
+    max-width: 900px;
+    margin: 0 auto;
+    letter-spacing: -0.01em;
+  }
+  .quote::before { content:"「"; color: var(--accent); margin-right: 4px;}
+  .quote::after { content:"」"; color: var(--accent); margin-left: 4px;}
+
+  /* dot indicator */
+  .dot-indicator {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 100;
+  }
+  .dot-indicator a {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(78, 52, 46, 0.22);
+    transition: all 0.35s cubic-bezier(0.22,1,0.36,1);
+    position: relative;
+  }
+  .dot-indicator a:hover { background: rgba(78, 52, 46, 0.5); }
+  .dot-indicator a.active {
+    background: var(--accent);
+    transform: scale(1.5);
+    box-shadow: 0 0 0 4px rgba(216, 140, 58, 0.18);
+  }
+  .dot-indicator a .lbl {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-soft);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+  }
+  .dot-indicator a:hover .lbl,
+  .dot-indicator.scrolling a.active .lbl { opacity: 1; }
+  body.on-dark .dot-indicator a { background: rgba(245,237,224,0.25); }
+  body.on-dark .dot-indicator a.active {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(216, 140, 58, 0.22);
+  }
+  body.on-dark .dot-indicator a .lbl { color: rgba(245,237,224,0.7); }
+
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent-light));
+    z-index: 200;
+    transition: width 0.15s linear;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 56px;
+    text-align: left;
+    margin-top: 56px;
+    max-width: 1080px;
+    width: 100%;
+  }
+  .footer-grid h3 {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 16px;
+    font-family: var(--font-mono);
+  }
+  .footer-grid ul { list-style: none; padding: 0; margin: 0; }
+  .footer-grid li { padding: 6px 0; font-size: 15px; color: rgba(245,237,224,0.75); }
+  .footer-bottom {
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(245,237,224,0.15);
+    width: 100%;
+    max-width: 1080px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: rgba(245,237,224,0.5);
+    text-align: center;
+  }
+
+  .reveal { opacity: 1; transform: translateY(0); }
+  .js-on .reveal:not(.in) {
+    opacity: 0;
+    transform: translateY(36px);
+  }
+  .reveal {
+    transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1),
+                transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.d1 { transition-delay: 0.08s; }
+  .reveal.d2 { transition-delay: 0.16s; }
+  .reveal.d3 { transition-delay: 0.24s; }
+  .reveal.d4 { transition-delay: 0.32s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; scroll-snap-type: none; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
+
+  @media (max-width: 720px) {
+    section { padding: 72px 22px; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 18px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+    .dot-indicator { right: 12px; gap: 12px; }
+    .askbox { padding: 26px 22px; }
+    .prompt { padding: 24px 20px; line-height: 1.95; }
+    .rules li { grid-template-columns: 32px 1fr; gap: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+
+  <nav class="dot-indicator" id="dots" aria-label="章節導覽">
+    <a href="#act-01" data-i="0"><span class="lbl">01 · 開場</span></a>
+    <a href="#act-02" data-i="1"><span class="lbl">02 · 今天怎麼玩</span></a>
+    <a href="#act-03" data-i="2"><span class="lbl">03 · 第一輪</span></a>
+    <a href="#act-04" data-i="3"><span class="lbl">04 · 差在哪</span></a>
+    <a href="#act-05" data-i="4"><span class="lbl">05 · 第二輪</span></a>
+    <a href="#act-06" data-i="5"><span class="lbl">06 · 三行脈絡</span></a>
+    <a href="#act-07" data-i="6"><span class="lbl">07 · 接下來做什麼</span></a>
+    <a href="#act-08" data-i="7"><span class="lbl">08 · 好問題</span></a>
+    <a href="#act-09" data-i="8"><span class="lbl">09 · 回去做</span></a>
+  </nav>
+
+  <!-- ACT 01 封面 -->
+  <section id="act-01" data-block data-bg="1">
+    <div class="wrap">
+      <div class="act-cap reveal">第一場線上讀書會 · 2026.08.16</div>
+      <h1 class="display reveal d1">什麼是<br/>知識庫</h1>
+      <p class="lead reveal d2">今天不是上課。<br/>我們一起練習一件事：怎麼問出好問題。</p>
+      <p class="body reveal d3" style="margin-top:44px; font-family:var(--font-mono); font-size:13px; letter-spacing:0.18em;">↓ 往下滑 ↓</p>
+    </div>
+  </section>
+
+  <!-- ACT 02 今天怎麼玩 -->
+  <section id="act-02" data-block data-bg="2">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 02 · 今天怎麼玩</div>
+      <h2 class="display reveal d1">三件事先說</h2>
+      <ul class="rules">
+        <li class="reveal d1"><span class="n">1</span><span><strong>有問題就問。</strong>聽到別人講話，你覺得哪裡不懂、哪裡想追，都可以問。唯一的禮貌是等人家講完。</span></li>
+        <li class="reveal d2"><span class="n">2</span><span><strong>不想開口可以只打字。</strong>我不會點名。發言我們控制在一分鐘內，這是為了讓不擅長搶話的人也有位置。</span></li>
+        <li class="reveal d3"><span class="n">3</span><span><strong>離題的好話題我會先記下來。</strong>值得聊但會岔開的，我記到停車場，會後再回。</span></li>
+      </ul>
+      <p class="note reveal d4">我自己也在練習。我今天帶著一個困惑來。</p>
+    </div>
+  </section>
+
+  <!-- ACT 03 第一輪 -->
+  <section id="act-03" data-block data-bg="3">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 03 · 第一輪</div>
+      <h2 class="display reveal d1">我有一個困惑</h2>
+      <div class="askbox reveal d2">
+        <p>對我來說，建知識庫就像想上網就要辦門號一樣理所當然。可是我發現大部分人不是這樣想。</p>
+        <p>我很困惑，為什麼大家不建知識庫。</p>
+        <p class="sub">你可以講你自己為什麼沒建，也可以講你覺得別人為什麼不建。猜的也可以。這一輪想補充的，先打在聊天室。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 04 差在哪 -->
+  <section id="act-04" data-block data-bg="4">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 04 · 順便講一件事</div>
+      <h2 class="display reveal d1">資料庫、知識庫、<br/>規則庫</h2>
+      <div class="grid-3">
+        <div class="card reveal d1">
+          <div class="num">資料庫</div>
+          <h3 class="h2">發生過什麼</h3>
+          <p class="body">會議記錄、報價單、通訊錄。要查的時候找得到。</p>
+          <p class="body" style="margin-top:14px; color:var(--accent);">AI 拿到只能查給你</p>
+        </div>
+        <div class="card reveal d2">
+          <div class="num">知識庫</div>
+          <h3 class="h2">你當時怎麼判斷的</h3>
+          <p class="body">為什麼這個案子接、那個不接。你的標準跟你踩過的坑。</p>
+          <p class="body" style="margin-top:14px; color:var(--accent);">AI 拿到能照你的標準判斷</p>
+        </div>
+        <div class="card reveal d3">
+          <div class="num">規則庫</div>
+          <h3 class="h2">下次直接這樣做</h3>
+          <p class="body">已經定案、不用再想的事。不必每次重新判斷。</p>
+          <p class="body" style="margin-top:14px; color:var(--accent);">AI 拿到直接照做</p>
+        </div>
+      </div>
+      <p class="lead reveal d4" style="margin-top:36px;">三個是會往上長的。同一件事發生幾次是資料，你歸納出標準就是知識，確定每次都適用就升級成規則。</p>
+    </div>
+  </section>
+
+  <!-- ACT 05 第二輪 -->
+  <section id="act-05" data-block data-bg="2">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 05 · 第二輪</div>
+      <h2 class="display reveal d1">你想留下來的<br/>是什麼</h2>
+      <div class="askbox reveal d2">
+        <p>有沒有什麼東西，是你很想留下來、但到現在還沒留下來的。</p>
+        <p class="sub">還沒開始建知識庫也沒關係，這一題不用先有系統才答得出來。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACT 06 三行脈絡 -->
+  <section id="act-06" data-block data-bg="3">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 06 · 四分鐘</div>
+      <h2 class="h1 reveal d1" style="font-size:clamp(28px,3.6vw,44px);">打開你平常用的 AI，貼這幾行</h2>
+      <div class="prompt reveal d2">
+        我的工作是<span class="blank"></span>。<br/>
+        我手上已經累積的資料有<span class="blank"></span>。<br/>
+        我最常重複做的事情是<span class="blank"></span>。
+        <span class="ask">根據以上，你覺得我有哪些東西已經可以整理成知識庫？哪些地方你是用猜的，請標出來。</span>
+      </div>
+      <p class="note reveal d3">
+        四分鐘到就收，沒做完沒關係。<br/>
+        <strong>回來只貼兩句：AI 講得最準的一句，跟最不準的一句。</strong><br/>
+        用手機、公司電腦不能用 AI、不想把自己的事情打進去，都可以只看大家貼什麼。
+      </p>
+    </div>
+  </section>
+
+  <!-- ACT 07 第三輪 -->
+  <section id="act-07" data-block data-bg="4">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 07 · 第三輪</div>
+      <h2 class="display reveal d1">接下來<br/>你要做什麼</h2>
+      <div class="askbox reveal d2">
+        <p>今天講到的東西裡面，挑一件你這禮拜真的會做的。</p>
+        <p class="sub">小一點沒關係，小到不會失敗最好。不知道挑什麼的話，可以從剛剛 AI 給你的那幾個建議裡面選一個。</p>
+      </div>
+      <p class="note reveal d3">講出來或打在聊天室都可以，不想公開的自己記著也行。<br/><strong>下一場開場，我會問大家做了沒。</strong></p>
+    </div>
+  </section>
+
+  <!-- ACT 08 好問題 -->
+  <section id="act-08" data-block data-bg="5">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 08 · 收尾</div>
+      <p class="quote reveal d1">一個好問題，是因為它問得清楚，<br/>還是因為它背後的思考已經足夠清楚。</p>
+      <p class="lead reveal d2" style="margin-top:44px;">
+        你今天問得出好問題，是因為你心裡本來就有一套判斷。<br/>
+        知識庫就是把那套判斷留下來，讓你下次不用重新想一遍，也讓 AI 知道你要什麼。
+      </p>
+    </div>
+  </section>
+
+  <!-- ACT 09 回去做 -->
+  <section id="act-09" data-block data-bg="dark">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 09 · 今天回去</div>
+      <h2 class="display reveal d1">只做一件事</h2>
+      <p class="lead reveal d2">
+        把你剛剛說要做的那件事，存成一個檔案。<br/>
+        連同你為什麼挑它，一起寫進去。
+      </p>
+      <p class="lead reveal d3" style="margin-top:28px; color:var(--accent-light); font-weight:600;">
+        那就是你知識庫的第一筆。<br/>
+        因為它不是資料，是你的判斷。
+      </p>
+      <p class="lead reveal d4" style="margin-top:28px;">
+        下一場開場，我會問你做了沒。
+      </p>
+
+      <div class="footer-grid">
+        <div class="reveal d1">
+          <h3>會後</h3>
+          <p class="body" style="color:rgba(245,237,224,0.72);">
+            今天大家貼的東西，我會整理成一份筆記寄給你們，
+            停車場裡沒回完的問題也會一題一題回。
+            信裡有三個小問題，花一分鐘回我就好。
+          </p>
+        </div>
+        <div class="reveal d2">
+          <h3>下一場</h3>
+          <p class="body" style="color:rgba(245,237,224,0.72);">
+            題目還沒定，因為我想從今天大家講的東西裡面挑。
+            今天卡最多人的那一題，就是下一場的主題。
+          </p>
+        </div>
+        <div class="reveal d3">
+          <h3>今天走過</h3>
+          <ul>
+            <li>為什麼大家不建</li>
+            <li>資料庫、知識庫、規則庫</li>
+            <li>你想留下什麼</li>
+            <li>三行脈絡</li>
+            <li>補一句，再問一次</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom reveal d4">
+        什麼是知識庫 · 第一場線上讀書會 · 2026.08.16 · 江昱德
+      </div>
+    </div>
+  </section>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js-on');
+
+  const sections = [...document.querySelectorAll('section[data-block]')];
+  const dotNav = document.getElementById('dots');
+  const dots = [...document.querySelectorAll('.dot-indicator a')];
+  const progress = document.getElementById('progress');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!reducedMotion) {
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+      }
+    }), { threshold: 0.25 });
+    sections.forEach((s) => io.observe(s));
+  } else {
+    document.querySelectorAll('.reveal').forEach((el) => el.classList.add('in'));
+  }
+
+  const navIo = new IntersectionObserver((entries) => entries.forEach((e) => {
+    if (e.isIntersecting) {
+      const i = sections.indexOf(e.target);
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+      document.body.classList.toggle('on-dark', e.target.getAttribute('data-bg') === 'dark');
+    }
+  }), { threshold: 0.5 });
+  sections.forEach((s) => navIo.observe(s));
+
+  const scroller = document.scrollingElement || document.documentElement;
+  let ticking = false;
+  let scrollTimer = null;
+  function updateProgress() {
+    const max = scroller.scrollHeight - scroller.clientHeight;
+    const pct = max > 0 ? (scroller.scrollTop / max) * 100 : 0;
+    progress.style.width = pct + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+    dotNav.classList.add('scrolling');
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(() => dotNav.classList.remove('scrolling'), 1100);
+  }, { passive: true });
+  updateProgress();
+})();
+</script>
+</body>
+</html>
