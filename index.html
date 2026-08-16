@@ -407,14 +407,19 @@
     font-size: 15px;
   }
 
-  /* 折疊展開時解除該頁吸附，避免被下一頁蓋住 */
-  section.has-open-details {
+  /* 折疊展開過之後，整頁改成一般長頁，避免強制吸附把長內容彈走 */
+  html.snap-off {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+  }
+  html.snap-off section {
     scroll-snap-align: none;
-    min-height: auto;
     place-items: start center;
     align-content: start;
-    padding-top: 88px;
-    padding-bottom: 88px;
+  }
+  section.has-open-details {
+    place-items: start center;
+    align-content: start;
   }
 
   .reveal { opacity: 1; transform: translateY(0); }
@@ -456,12 +461,13 @@
     <a href="#act-01" data-i="0"><span class="lbl">01 · 封面</span></a>
     <a href="#act-02" data-i="1"><span class="lbl">02 · 現場帶了什麼來</span></a>
     <a href="#act-03" data-i="2"><span class="lbl">03 · 知識庫是什麼</span></a>
-    <a href="#act-04" data-i="3"><span class="lbl">04 · 四層</span></a>
-    <a href="#act-05" data-i="4"><span class="lbl">05 · 軟體不是 AI</span></a>
-    <a href="#act-06" data-i="5"><span class="lbl">06 · 為什麼不建</span></a>
-    <a href="#act-07" data-i="6"><span class="lbl">07 · 老師傅</span></a>
-    <a href="#act-08" data-i="7"><span class="lbl">08 · 帶走什麼</span></a>
-    <a href="#act-09" data-i="8"><span class="lbl">09 · 下一場</span></a>
+    <a href="#act-04" data-i="3"><span class="lbl">04 · 三層</span></a>
+    <a href="#act-05" data-i="4"><span class="lbl">05 · 習慣庫</span></a>
+    <a href="#act-06" data-i="5"><span class="lbl">06 · 軟體不是 AI</span></a>
+    <a href="#act-07" data-i="6"><span class="lbl">07 · 為什麼不建</span></a>
+    <a href="#act-08" data-i="7"><span class="lbl">08 · 老師傅</span></a>
+    <a href="#act-09" data-i="8"><span class="lbl">09 · 帶走什麼</span></a>
+    <a href="#act-10" data-i="9"><span class="lbl">10 · 下一場</span></a>
   </nav>
 
   <!-- ACT 01 封面 -->
@@ -561,21 +567,51 @@
         </div>
       </div>
       <p class="note reveal d4">動詞是遞進的：<strong>存 → 存加連 → 出手。</strong>判斷放在規則庫，知識庫的核心是「連」。</p>
+    </div>
+  </section>
+
+  <!-- ACT 05 習慣庫 -->
+  <section id="act-05" data-block data-bg="5">
+    <div class="wrap">
+      <div class="act-cap reveal">ACT 05 · 今天的新感想</div>
+      <h2 class="display reveal d1">還有一個<br/>習慣庫</h2>
+      <p class="quote reveal d2" style="margin-top:8px; font-size:clamp(20px,2.4vw,32px);">你可以沒有什麼知識，但每個人總是有一些習慣</p>
+      <p class="lead reveal d3" style="margin-top:32px;">
+        前面三層是給「手上有東西要整理」的人。習慣庫是給那些覺得自己沒什麼東西可以存的人，而那其實是大多數人。
+      </p>
+      <div class="grid-3">
+        <div class="card reveal d1">
+          <div class="num">存什麼 01</div>
+          <h3 class="h2">你怎麼交代事情</h3>
+          <p class="body">你講話的方式、你習慣先講結論還是先講背景、你要多細。</p>
+        </div>
+        <div class="card reveal d2">
+          <div class="num">存什麼 02</div>
+          <h3 class="h2">你要什麼、不要什麼</h3>
+          <p class="body">你受不了的用詞、你不想要的格式、你每次都會退回的東西。</p>
+        </div>
+        <div class="card reveal d3">
+          <div class="num">存什麼 03</div>
+          <h3 class="h2">你慣用的順序</h3>
+          <p class="body">同一類事情你每次都怎麼開始、先做哪一步、最後檢查什麼。</p>
+        </div>
+      </div>
       <details class="more reveal d4">
-        <summary>現場多長出來的第四個：習慣庫</summary>
+        <summary>其實你可能已經在用了，只是寫得太少</summary>
         <div class="more-body">
-          <p>如果覺得「我沒什麼知識可以存」，那就從習慣開始。<strong>你可以沒有什麼知識，但每個人一定有慣用的流程跟偏好。</strong></p>
-          <p>把你的習慣寫下來，AI 就知道要怎麼配合你。網頁版 AI 的「個人化設定」其實就是最陽春的習慣庫，只是它讓你填的欄位太簡略，寫不了幾個字。</p>
-          <p>真正要做的事沒有比較難：<strong>把你平常怎麼開口、怎麼交代、要什麼不要什麼，整理清楚一點</strong>。這是門檻最低的一層，也是最快有感的一層。</p>
+          <p>網頁版 AI 的「個人化設定」就是最陽春的習慣庫。它讓你填的東西很簡略，通常只有幾句自我介紹跟簡單的偏好，所以效果有限。</p>
+          <p>真正要做的事沒有比較難，就是<strong>把那幾句話寫成一份完整一點的文件</strong>：你的身分、你在做什麼、你習慣怎麼被回應、哪些做法你已經試過不行。寫清楚之後，AI 每次接手的起跑點都不一樣。</p>
+          <p>這是門檻最低的一層，也是最快有感的一層。<strong>不用等你有系統，今天就可以開始寫。</strong></p>
+          <p>它跟前面三層的關係還沒定案。可以把它看成規則庫的入門版：你的偏好其實也是一種判斷，只是門檻低很多，不需要先想清楚什麼大道理。</p>
         </div>
       </details>
     </div>
   </section>
 
-  <!-- ACT 05 軟體不是 AI -->
-  <section id="act-05" data-block data-bg="2">
+  <!-- ACT 06 軟體不是 AI -->
+  <section id="act-06" data-block data-bg="2">
     <div class="wrap">
-      <div class="act-cap reveal">ACT 05 · 一個常見的誤會</div>
+      <div class="act-cap reveal">ACT 06 · 一個常見的誤會</div>
       <h2 class="display reveal d1">軟體是軟體，<br/>AI 是 AI</h2>
       <div class="grid-2">
         <div class="card reveal d1">
@@ -605,10 +641,10 @@
     </div>
   </section>
 
-  <!-- ACT 06 為什麼不建 -->
-  <section id="act-06" data-block data-bg="3">
+  <!-- ACT 07 為什麼不建 -->
+  <section id="act-07" data-block data-bg="3">
     <div class="wrap">
-      <div class="act-cap reveal">ACT 06 · 當天最誠實的一段</div>
+      <div class="act-cap reveal">ACT 07 · 當天最誠實的一段</div>
       <h2 class="display reveal d1">為什麼<br/>大家不建</h2>
       <ul class="steps">
         <li class="reveal d1"><span class="n">1</span><span><strong>建，本來就很麻煩。</strong>光是把手上的東西整理到能用，就是一個工程。</span></li>
@@ -634,10 +670,10 @@
     </div>
   </section>
 
-  <!-- ACT 07 老師傅 -->
-  <section id="act-07" data-block data-bg="4">
+  <!-- ACT 08 老師傅 -->
+  <section id="act-08" data-block data-bg="4">
     <div class="wrap">
-      <div class="act-cap reveal">ACT 07 · 當天最實用的方法</div>
+      <div class="act-cap reveal">ACT 08 · 當天最實用的方法</div>
       <h2 class="display reveal d1">老師傅<br/>怎麼開口</h2>
       <p class="lead reveal d2">直接問「你可以講一下你的技術嗎」，他會愣住，因為那個東西不在語言裡。</p>
       <ul class="steps">
@@ -672,10 +708,10 @@
     </div>
   </section>
 
-  <!-- ACT 08 帶走什麼 -->
-  <section id="act-08" data-block data-bg="5">
+  <!-- ACT 09 帶走什麼 -->
+  <section id="act-09" data-block data-bg="5">
     <div class="wrap">
-      <div class="act-cap reveal">ACT 08 · 當天大家說要做的</div>
+      <div class="act-cap reveal">ACT 09 · 當天大家說要做的</div>
       <h2 class="display reveal d1">帶走了什麼</h2>
       <div class="grid-3">
         <div class="card reveal d1">
@@ -708,10 +744,10 @@
     </div>
   </section>
 
-  <!-- ACT 09 下一場 -->
-  <section id="act-09" data-block data-bg="dark">
+  <!-- ACT 10 下一場 -->
+  <section id="act-10" data-block data-bg="dark">
     <div class="wrap">
-      <div class="act-cap reveal">ACT 09 · 下一場</div>
+      <div class="act-cap reveal">ACT 10 · 下一場</div>
       <h2 class="display reveal d1">怎麼問，<br/>才問得到</h2>
       <p class="lead reveal d2">
         當天最後浮出來的題目。同一件事，問法不同，AI 給的東西差很多。
@@ -800,7 +836,7 @@
   }), { threshold: 0.5 });
   sections.forEach((s) => navIo.observe(s));
 
-  // 折疊展開時解除該頁 scroll-snap
+  // 折疊：第一次展開就永久關掉全頁吸附，改成一般長頁
   function syncDetailState(section) {
     section.classList.toggle('has-open-details', !!section.querySelector('details[open]'));
   }
@@ -809,6 +845,7 @@
     d.addEventListener('toggle', () => {
       const s = d.closest('section[data-block]');
       if (s) syncDetailState(s);
+      if (d.open) document.documentElement.classList.add('snap-off');
     });
   });
 
